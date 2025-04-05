@@ -1,7 +1,7 @@
 class HTMLNode():
-    def __init__(self, tag=None, TextNode=None, children=None, props=None):
+    def __init__(self, tag=None, value=None, children=None, props=None):
         self.tag = tag
-        self.value = TextNode
+        self.value = value
         self.children = children
         self.props = props
 

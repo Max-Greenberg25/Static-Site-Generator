@@ -1,5 +1,6 @@
 from enum import Enum
 from htmlnode import LeafNode
+import re
 
 class TextType(Enum):
     TEXT = "text"
@@ -43,4 +44,24 @@ def text_node_to_html_node(text_node):
             return LeafNode('img', "", {"src": text_node.url, "alt": text_node.text})
         case _:
             raise Exception(f"Invalid TextType: {text_node.text_type}")    
-    
+
+
+def split_nodes_delimiter(old_nodes, delimiter, text_type):
+    new_nodes = []
+    for node in old_nodes:
+        if node.text_type is not TextType.TEXT:
+            new_nodes.append(node)
+            continue
+        split_node = []
+        sections = node.text.split(delimiter)
+        if len(sections) % 2 == 0:
+            raise ValueError("invalid markdown, format section not closed")
+        for i in range(len(sections)):
+            if sections[i] == "":
+                continue
+            if i % 2 == 0:
+                split_node.append(TextNode(sections[i], TextType.TEXT))
+            else:
+                split_node.append(TextNode(sections[i], text_type))
+        new_nodes.extend(split_node)
+    return new_nodes

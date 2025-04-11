@@ -11,6 +11,7 @@ def text_to_textnodes(text):
     nodes = split_nodes_links(nodes)
     return nodes
 
+
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
     for node in old_nodes:
@@ -30,7 +31,6 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
                 split_node.append(TextNode(sections[i], text_type))
         new_nodes.extend(split_node)
     return new_nodes
-
 
 def extract_markdown_images(text):
     pattern = r"!\[([^\[\]]*)\]\(([^\(\)]*)\)"
